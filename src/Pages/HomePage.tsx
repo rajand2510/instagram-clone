@@ -2,9 +2,6 @@ import {
   Bookmark,
   ChevronLeft,
   ChevronRight,
-  MessageCircle,
-  MoreHorizontal,
-  Send,
   Smile,
   Volume2,
   VolumeX,
@@ -18,7 +15,6 @@ import {
   SendIcon,
 } from "../assets/icon";
 import Profile from "../assets/images/profile.png";
-// Your story (use your uploaded image URL here)
 
 import myStoryImg from "../assets/images/profile.png";
 import { Post } from "../Types/type";
@@ -127,7 +123,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="w-full h-full  md:px-[132px]">
+    <div className="w-full h-full  md:px-[126px]">
       {/* Mobile header always full width */}
       <div className="w-full h-12 md:hidden fixed top-0 left-0 right-0 bg-white z-50 flex justify-between pt-2 px-4 items-center text-[16px] font-semibold">
         <span>
