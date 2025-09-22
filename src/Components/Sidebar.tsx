@@ -27,7 +27,9 @@ import Notification from "./Notification";
 import Portal from "../Hooks/Portal";
 import { useLocation, useNavigate } from "react-router";
 import Search from "./Search";
-import useNavigationStore, { TabName } from "../store/useNavigationStore";
+import useNavigationStore ,{TabName}from "../Store/useNavigationStore";
+
+
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
@@ -41,7 +43,6 @@ const Sidebar: React.FC = () => {
     showCreatePopup,
     showMorePopup,
     showMobileNotifications,
-    showMobileSearch,
     setActive,
     openNotifications,
     closeNotifications,

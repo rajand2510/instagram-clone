@@ -17,7 +17,6 @@ import {
 } from "../assets/icon";
 import Profile from "../assets/images/profile.png";
 import useNavigationStore from "../store/useNavigationStore";
-
 import myStoryImg from "../assets/images/profile.png";
 import { Post } from "../Types/type";
 import { posts } from "../Data/postsData";
