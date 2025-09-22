@@ -27,7 +27,7 @@ import Notification from "./Notification";
 import Portal from "../Hooks/Portal";
 import { useLocation, useNavigate } from "react-router";
 import Search from "./Search";
-import useNavigationStore ,{TabName}from "../Store/useNavigationStore";
+import useNavigationStore ,{TabName} from "../Store/useNavigationStore";
 
 
 

@@ -16,7 +16,7 @@ import {
   SendIcon,
 } from "../assets/icon";
 import Profile from "../assets/images/profile.png";
-import useNavigationStore from "../store/useNavigationStore";
+import useNavigationStore from "../Store/useNavigationStore";
 import myStoryImg from "../assets/images/profile.png";
 import { Post } from "../Types/type";
 import { posts } from "../Data/postsData";
