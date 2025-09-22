@@ -87,6 +87,114 @@ export const SendIcon = () => {
   );
 };
 
+export const MorePostIon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props} // 👈 spread props here
+    >
+      <path
+        d="M1 3C1 1.89543 1.89543 1 3 1H10C11.1046 1 12 1.89543 12 3V10C12 11.1046 11.1046 12 10 12H3C1.89543 12 1 11.1046 1 10V3Z"
+        fill="white"
+      />
+      <path
+        d="M15 4.5C15 3.67157 14.3284 3 13.5 3V10.5C13.5 12.1569 12.1569 13.5 10.5 13.5H3C3 14.3284 3.67157 15 4.5 15H11C13.2091 15 15 13.2091 15 11V4.5Z"
+        fill="white"
+      />
+    </svg>
+  );
+};
+
+export const TagIcon = () => {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="24"
+      height="24"
+      fill="currentColor"
+      className="x14rh7hd"
+    >
+      <title>Tagged</title>
+      <path
+        d="M10.201 3.797 12 1.997l1.799 1.8a1.59 1.59 0 0 0 1.124.465h5.259A1.818 1.818 0 0 1 22 6.08v14.104a1.818 1.818 0 0 1-1.818 1.818H3.818A1.818 1.818 0 0 1 2 20.184V6.08a1.818 1.818 0 0 1 1.818-1.818h5.26a1.59 1.59 0 0 0 1.123-.465z"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2px"
+      ></path>
+      <g
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2px"
+      >
+        <path
+          d="M18.598 22.002V21.4a3.949 3.949 0 0 0-3.948-3.949H9.495A3.949 3.949 0 0 0 5.546 21.4v.603"
+          fill="none"
+        ></path>
+        <circle cx="12.07211" cy="11.07515" r="3.55556" fill="none"></circle>
+      </g>
+    </svg>
+  );
+};
+
+export const PostsIcon = () => {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="24"
+      height="24"
+      fill="currentColor"
+      className="x14rh7hd"
+    >
+      <title>Posts</title>
+      <path
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2px"
+        d="M3 3H21V21H3z"
+      ></path>
+      <path
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2px"
+        d="M9.01486 3 9.01486 21"
+      ></path>
+      <path
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2px"
+        d="M14.98514 3 14.98514 21"
+      ></path>
+      <path
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2px"
+        d="M21 9.01486 3 9.01486"
+      ></path>
+      <path
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2px"
+        d="M21 14.98514 3 14.98514"
+      ></path>
+    </svg>
+  );
+};
+
 export const Instagram = () => {
   return (
     <svg
@@ -507,22 +615,115 @@ export const ExploreIconFill = () => {
   );
 };
 
-export const ReelIconFill = () => {
+export const NoPostIcon = () => {
+  return (
+    <svg
+      aria-label="When you share photos, they will appear on your profile."
+
+      fill="currentColor"
+      height="62"
+      role="img"
+      viewBox="0 0 96 96"
+      width="62"
+    >
+      <title>When you share photos, they will appear on your profile.</title>
+      <circle
+        cx="48"
+        cy="48"
+        fill="none"
+        r="47"
+        stroke="currentColor"
+        stroke-miterlimit="10"
+        stroke-width="2"
+      ></circle>
+      <ellipse
+        cx="48.002"
+        cy="49.524"
+        fill="none"
+        rx="10.444"
+        ry="10.476"
+        stroke="currentColor"
+        stroke-linejoin="round"
+        stroke-width="2.095"
+      ></ellipse>
+      <path
+        d="M63.994 69A8.02 8.02 0 0 0 72 60.968V39.456a8.023 8.023 0 0 0-8.01-8.035h-1.749a4.953 4.953 0 0 1-4.591-3.242C56.61 25.696 54.859 25 52.469 25h-8.983c-2.39 0-4.141.695-5.181 3.178a4.954 4.954 0 0 1-4.592 3.242H32.01a8.024 8.024 0 0 0-8.012 8.035v21.512A8.02 8.02 0 0 0 32.007 69Z"
+        fill="none"
+        stroke="currentColor"
+        stroke-linejoin="round"
+        stroke-width="2"
+      ></path>
+    </svg>
+  );
+};
+
+export const NoTagPost = () => {
+  return (
+    <svg
+      aria-label="Photos of you"
+      className="x1lliihq x1n2onr6 x5n08af"
+      fill="currentColor"
+      height="62"
+      role="img"
+      viewBox="0 0 96 96"
+      width="62"
+    >
+      <title>Photos of you</title>
+      <circle
+        cx="48"
+        cy="48"
+        fill="none"
+        r="47"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+      ></circle>
+      <path
+        d="M56.826 44.119a8.824 8.824 0 1 1-8.823-8.825 8.823 8.823 0 0 1 8.823 8.825Z"
+        fill="none"
+        stroke="currentColor"
+        stroke-miterlimit="10"
+        stroke-width="2"
+      ></path>
+      <path
+        d="M63.69 67.999a9.038 9.038 0 0 0-9.25-8.998H41.56A9.038 9.038 0 0 0 32.31 68"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+      ></path>
+      <path
+        d="M48 20.215c-2.94 0-7.125 8.76-11.51 8.785h-4.705A8.785 8.785 0 0 0 23 37.784v22.428a8.785 8.785 0 0 0 8.785 8.785h32.43A8.785 8.785 0 0 0 73 60.212V37.784A8.785 8.785 0 0 0 64.215 29h-4.704c-4.385-.026-8.57-8.785-11.511-8.785Z"
+        fill="none"
+        stroke="currentColor"
+        stroke-miterlimit="10"
+        stroke-width="2"
+      ></path>
+    </svg>
+  );
+};
+
+export const ReelIconFill: React.FC<React.SVGProps<SVGSVGElement>> = (
+  props
+) => {
   return (
     <svg
       aria-label="Reels"
-      className="x1lliihq x1n2onr6 x5n08af"
-      fill="currentColor"
-      height="24"
       role="img"
-      viewBox="0 0 24 24"
       width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props} // 👈 spread props so className, width, height, style all work
     >
       <title>Reels</title>
       <path
         d="m12.823 1 2.974 5.002h-5.58l-2.65-4.971c.206-.013.419-.022.642-.027L8.55 1Zm2.327 0h.298c3.06 0 4.468.754 5.64 1.887a6.007 6.007 0 0 1 1.596 2.82l.07.295h-4.629L15.15 1Zm-9.667.377L7.95 6.002H1.244a6.01 6.01 0 0 1 3.942-4.53Zm9.735 12.834-4.545-2.624a.909.909 0 0 0-1.356.668l-.008.12v5.248a.91.91 0 0 0 1.255.84l.109-.053 4.545-2.624a.909.909 0 0 0 .1-1.507l-.1-.068-4.545-2.624Zm-14.2-6.209h21.964l.015.36.003.189v6.899c0 3.061-.755 4.469-1.888 5.64-1.151 1.114-2.5 1.856-5.33 1.909l-.334.003H8.551c-3.06 0-4.467-.755-5.64-1.889-1.114-1.15-1.854-2.498-1.908-5.33L1 15.45V8.551l.003-.189Z"
         fillRule="evenodd"
-      ></path>
+      />
     </svg>
   );
 };

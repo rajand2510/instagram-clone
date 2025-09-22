@@ -5,18 +5,20 @@ export type NotificationProps = {
 
 // types.ts
 // Types/type.ts
-export type Post = {
+export interface Post {
   id: number;
   user: {
     username: string;
     avatar: string;
   };
   timeAgo: string;
-  imageUrl?: string;   // make image optional
-  videoUrl?: string;   // new optional field
+  imageUrl?: string;
+  videoUrl?: string;
   likes: number;
+  comments: number; // 👈 new
   caption: string;
-};
+}
+
 
 // types.ts
 export interface SuggestedPerson {
@@ -25,4 +27,14 @@ export interface SuggestedPerson {
   fullName: string;
   profilePic: string;
   isFollowing: boolean;
+}
+
+// Types/type.ts
+export interface Reel {
+  id: number;
+  videoUrl: string;
+  thumbnail: string;
+  views: number;     
+  likes: number;     
+  comments: number;  
 }

@@ -66,6 +66,7 @@ const Notification = ({ closeMobileNotifications }: NotificationProps) => {
             ))}
           </div>
         ))}
+        
       </div>
     </>
   );
