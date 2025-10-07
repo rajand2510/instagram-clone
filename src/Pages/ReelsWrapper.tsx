@@ -1,4 +1,3 @@
-// ReelsFull.tsx
 import { MoreHorizontal, Smile } from "lucide-react";
 import React, {
   useState,
@@ -110,6 +109,7 @@ const Heart = (props: SVGProps<SVGSVGElement>) => (
     <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
   </svg>
 );
+
 const MessageCircle = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -139,6 +139,7 @@ const Bookmark = (props: SVGProps<SVGSVGElement>) => (
     <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
   </svg>
 );
+
 const Volume2 = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -155,6 +156,7 @@ const Volume2 = (props: SVGProps<SVGSVGElement>) => (
     <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
   </svg>
 );
+
 const VolumeX = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -172,24 +174,23 @@ const VolumeX = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
-/* -------------------- BUTTON -------------------- */
+
+
+/* -------------------- UI COMPONENTS -------------------- */
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "default" | "outline" | "secondary" | "ghost";
   size?: "default" | "sm" | "lg" | "icon";
 }
+
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "default", size = "default", ...props }, ref) => {
     const base =
       "inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
     const variants = {
-      default:
-        "bg-primary text-primary-foreground hover:bg-primary/90 active:scale-95",
-      outline:
-        "border border-primary bg-transparent text-foreground hover:bg-accent active:scale-95",
-      secondary:
-        "bg-secondary text-secondary-foreground hover:bg-secondary/80 active:scale-95",
-      ghost:
-        "bg-transparent hover:bg-accent hover:text-accent-foreground active:scale-95",
+      default: "bg-primary text-primary-foreground hover:bg-primary/90 active:scale-95",
+      outline: "border border-primary bg-transparent text-foreground hover:bg-accent active:scale-95",
+      secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 active:scale-95",
+      ghost: "bg-transparent hover:bg-accent hover:text-accent-foreground active:scale-95",
     };
     const sizes = {
       default: "h-10 px-4 py-2 text-sm",
@@ -200,9 +201,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
-        className={`${base} ${variants[variant]} ${sizes[size]} ${
-          className || ""
-        }`}
+        className={`${base} ${variants[variant]} ${sizes[size]} ${className || ""}`}
         {...props}
       />
     );
@@ -210,21 +209,17 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 );
 Button.displayName = "Button";
 
-/* -------------------- AVATAR -------------------- */
 interface AvatarProps {
   src?: string;
   alt?: string;
   fallback?: string;
   className?: string;
 }
+
 const Avatar = ({ src, alt, fallback, className }: AvatarProps) => {
   const [error, setError] = useState(false);
   return (
-    <div
-      className={`relative inline-flex items-center justify-center overflow-hidden rounded-full bg-muted ${
-        className || ""
-      }`}
-    >
+    <div className={`relative inline-flex items-center justify-center overflow-hidden rounded-full bg-muted ${className || ""}`}>
       {src && !error ? (
         <img
           src={src}
@@ -241,87 +236,204 @@ const Avatar = ({ src, alt, fallback, className }: AvatarProps) => {
   );
 };
 
-/* -------------------- REEL ACTIONS -------------------- */
-interface ReelActionsProps {
+/* -------------------- COMPONENT 1: COMMENTS SECTION -------------------- */
+interface Comment {
+  id: string;
+  username: string;
+  userAvatar: string;
+  text: string;
+}
+
+interface CommentsProps {
+  comments: Comment[];
+  isVisible: boolean;
+  onClose: () => void;
+}
+
+const CommentsSection = ({ comments, isVisible, onClose }: CommentsProps) => {
+  const handleClose = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
+  if (!isVisible) return null;
+
+  return (
+    <div
+      className="fixed bottom-0 left-0 right-0 h-[50vh] z-40 bg-white backdrop-blur-md p-4 flex flex-col rounded-t-2xl shadow-lg transform transition-transform duration-300 ease-out
+        md:absolute md:bottom-0 md:right-10 md:left-auto md:w-80 md:h-[50vh] md:rounded-lg md:rounded-tr-none"
+      style={{ transform: isVisible ? "translateY(0)" : "translateY(100%)" }}
+      onClick={handleClose}
+    >
+      <div className="flex flex-col flex-1 h-full" onClick={(e) => e.stopPropagation()}>
+        <div className="flex md:hidden w-full justify-center items-center">
+          <span className="w-14 h-1 rounded-full mb-5 bg-gray-300"></span>
+        </div>
+
+        <h3 className="font-semibold md:font-bold mb-3 text-center">Comments</h3>
+
+        <div className="flex-1 overflow-y-auto mb-2 pr-1">
+          {comments.map((c) => (
+            <div key={c.id} className="flex flex-col gap-1 mb-3">
+              <div className="flex items-start gap-3">
+                <Avatar
+                  src={c.userAvatar}
+                  alt={c.username}
+                  fallback={c.username[0]}
+                  className="h-8 w-8 border border-gray-300"
+                />
+                <div className="flex flex-col flex-1">
+                  <span className="font-semibold flex justify-between text-sm">
+                    <span>{c.username}</span>
+                    <Heart className="h-3 w-3" />
+                  </span>
+                  <span className="text-sm">{c.text}</span>
+                  <div className="flex gap-4 mt-1 text-xs text-gray-500">
+                    <button className="flex font-semibold items-center gap-1">50 likes</button>
+                    <button className="font-semibold">Reply</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-2 bg-gray-100 px-2 py-1 rounded-full border border-gray-300">
+          <Avatar
+            src="https://randomuser.me/api/portraits/men/32.jpg"
+            alt="You"
+            fallback="Y"
+            className="h-8 w-8"
+          />
+          <input
+            type="text"
+            placeholder="Add a comment..."
+            className="w-full pl-2 bg-gray-100 rounded-full text-sm focus:outline-none text-gray-900"
+          />
+          <Smile className="h-6 w-6 text-gray-500 cursor-pointer" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* -------------------- COMPONENT 2: SINGLE REEL -------------------- */
+interface ReelData {
+  id: string;
+  videoUrl: string;
+  username: string;
+  userAvatar: string;
+  description: string;
   likes: number;
-  comments: number;
+  comments: Comment[];
+  music: string;
+}
+
+interface SingleReelProps {
+  reel: ReelData;
+  videoRef: (el: HTMLVideoElement | null) => void;
+  isMuted: boolean;
   isLiked: boolean;
   isSaved: boolean;
+  onMuteToggle: () => void;
+  onVideoClick: () => void;
   onLike: () => void;
   onComment: () => void;
-  onShare: () => void;
   onSave: () => void;
-  isMobile?: boolean;
 }
-const ReelActions = ({
-  likes,
-  comments,
+
+const SingleReel = ({
+  reel,
+  videoRef,
+  isMuted,
   isLiked,
   isSaved,
+  onMuteToggle,
+  onVideoClick,
   onLike,
   onComment,
-  onShare,
   onSave,
-  isMobile = false,
-}: ReelActionsProps) => (
-  <div className="flex flex-col gap-6">
-    <button
-      onClick={onLike}
-      className="flex flex-col items-center gap-1 transition-all hover:scale-110"
-    >
-      <Heart
-        className={`h-7 w-7 transition-colors ${
-          isLiked
-            ? "fill-red-500 text-red-500"
-            : isMobile
-            ? "text-white"
-            : "text-foreground"
-        }`}
-      />
-      <span className={`text-xs font-semibold ${isMobile ? "text-white" : ""}`}>
-        {likes}
-      </span>
-    </button>
-    <button
-      onClick={onComment}
-      className="flex flex-col items-center gap-1 transition-all hover:scale-110"
-    >
-      <MessageCircle className={`h-7 w-7 ${isMobile ? "text-white" : ""}`} />
-      <span className={`text-xs font-semibold ${isMobile ? "text-white" : ""}`}>
-        {comments}
-      </span>
-    </button>
-    <button
-      onClick={onShare}
-      className="flex flex-col items-center gap-1 transition-all hover:scale-110"
-    >
-      <SendIcon color={isMobile ? "white" : "currentColor"} />
-    </button>
-    <button
-      onClick={onSave}
-      className="flex flex-col items-center gap-1 transition-all hover:scale-110"
-    >
-      <Bookmark
-        className={`h-7 w-7 transition-colors ${
-          isSaved
-            ? "fill-black text-black"
-            : isMobile
-            ? "text-white"
-            : "text-foreground"
-        }`}
-      />
-    </button>
-    <button
-      onClick={onSave}
-      className="flex flex-col items-center gap-1 transition-all hover:scale-110"
-    >
-      <MoreHorizontal
-        className={`h-5 w-5 transition-colors ${isMobile ? "text-white" : ""}`}
-      />
-    </button>
-  </div>
-);
+}: SingleReelProps) => {
+  const ReelActions = ({ isMobile = false }) => (
+    <div className="flex flex-col gap-6">
+      <button onClick={onLike} className="flex flex-col items-center gap-1 transition-all hover:scale-110">
+        <Heart
+          className={`h-7 w-7 transition-colors ${
+            isLiked ? "fill-red-500 text-red-500" : isMobile ? "text-white" : "text-foreground"
+          }`}
+        />
+        <span className={`text-xs font-semibold ${isMobile ? "text-white" : ""}`}>{reel.likes}</span>
+      </button>
+      <button onClick={onComment} className="flex flex-col items-center gap-1 transition-all hover:scale-110">
+        <MessageCircle className={`h-7 w-7 ${isMobile ? "text-white" : ""}`} />
+        <span className={`text-xs font-semibold ${isMobile ? "text-white" : ""}`}>{reel.comments.length}</span>
+      </button>
+      <button className="flex flex-col items-center gap-1 transition-all hover:scale-110">
+        <SendIcon color={isMobile ? "white" : "currentColor"} />
+      </button>
+      <button onClick={onSave} className="flex flex-col items-center gap-1 transition-all hover:scale-110">
+        <Bookmark
+          className={`h-7 w-7 transition-colors ${
+            isSaved ? "fill-black text-black" : isMobile ? "text-white" : "text-foreground"
+          }`}
+        />
+      </button>
+      <button className="flex flex-col items-center gap-1 transition-all hover:scale-110">
+        <MoreHorizontal className={`h-5 w-5 transition-colors ${isMobile ? "text-white" : ""}`} />
+      </button>
+    </div>
+  );
 
+  return (
+    <div className="w-full h-full flex-shrink-0 relative">
+      <video
+        ref={videoRef}
+        src={reel.videoUrl}
+        className="w-full h-full object-cover cursor-pointer"
+        loop
+        muted={isMuted}
+        onClick={onVideoClick}
+        playsInline
+        autoPlay
+      />
+
+      <button
+        onClick={onMuteToggle}
+        className="absolute top-4 right-4 p-2 rounded-full bg-gray-500/60 transition-colors z-10"
+      >
+        {isMuted ? <VolumeX className="h-6 w-6 text-white" /> : <Volume2 className="h-6 w-6 text-white" />}
+      </button>
+
+      <div className="absolute bottom-0 pb-12 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10 md:bottom-0">
+        <div className="flex items-center gap-3 mb-3 text-white">
+          <Avatar
+            src={reel.userAvatar}
+            alt={reel.username}
+            fallback={reel.username[0]}
+            className="h-10 w-10 border-2 border-primary"
+          />
+          <div className="flex items-center gap-2">
+            <span className="font-semibold text-sm">
+              {reel.username}
+              <p className="text-xs text-muted-foreground text-white">♪ {reel.music}</p>
+            </span>
+            <Button variant="outline" size="sm" className="h-7 px-4 text-xs text-white">
+              Follow
+            </Button>
+          </div>
+        </div>
+        <p className="text-sm mb-2 text-white">{reel.description}</p>
+      </div>
+
+      <div className="absolute bottom-20 right-4 md:hidden flex flex-col gap-6 z-20">
+        <ReelActions isMobile={true} />
+      </div>
+    </div>
+  );
+};
+
+/* -------------------- COMPONENT 3: MAIN REELS WRAPPER -------------------- */
 const ReelsWrapper = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
@@ -344,12 +456,11 @@ const ReelsWrapper = () => {
     const currentVideo = videoRefs.current[currentIndex];
     if (currentVideo) {
       if (isPlaying) {
-        currentVideo.play().catch(() => {}); // Ignore play promise errors
+        currentVideo.play().catch(() => {});
       } else {
         currentVideo.pause();
       }
     }
-    // Optionally pause others for performance
     videoRefs.current.forEach((video, index) => {
       if (index !== currentIndex) {
         video?.pause();
@@ -357,7 +468,6 @@ const ReelsWrapper = () => {
     });
   }, [currentIndex, isPlaying]);
 
-  // Prevent pull-to-refresh on mobile by disabling overscroll behavior
   useEffect(() => {
     const root = document.documentElement;
     const prevOverscroll = root.style.overscrollBehaviorY;
@@ -367,18 +477,16 @@ const ReelsWrapper = () => {
     };
   }, []);
 
-  /* Scroll up/down to change reel */
   useEffect(() => {
     const handleScroll = (e: WheelEvent) => {
       e.preventDefault();
       if (scrollCooldown) return;
 
       setScrollCooldown(true);
-      setTimeout(() => setScrollCooldown(false), 500); // 500ms cooldown
+      setTimeout(() => setScrollCooldown(false), 500);
 
       if (e.deltaY > 0) {
-        if (currentIndex < mockReels.length - 1)
-          setCurrentIndex(currentIndex + 1);
+        if (currentIndex < mockReels.length - 1) setCurrentIndex(currentIndex + 1);
       } else if (e.deltaY < 0) {
         if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
       }
@@ -387,12 +495,10 @@ const ReelsWrapper = () => {
     return () => window.removeEventListener("wheel", handleScroll);
   }, [currentIndex, scrollCooldown]);
 
-  /* Keyboard navigation */
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowDown") {
-        if (currentIndex < mockReels.length - 1)
-          setCurrentIndex(currentIndex + 1);
+        if (currentIndex < mockReels.length - 1) setCurrentIndex(currentIndex + 1);
       } else if (e.key === "ArrowUp") {
         if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
       }
@@ -402,7 +508,7 @@ const ReelsWrapper = () => {
   }, [currentIndex]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    e.preventDefault(); // Prevent default to avoid interference with browser gestures
+    e.preventDefault();
     setTouchStartY(e.touches[0].clientY);
   };
 
@@ -410,37 +516,44 @@ const ReelsWrapper = () => {
     if (touchStartY === null) return;
     const touchEndY = e.changedTouches[0].clientY;
     const deltaY = touchEndY - touchStartY;
-    const threshold = 100; // Adjust threshold as needed
+    const threshold = 100;
     if (Math.abs(deltaY) > threshold) {
       if (deltaY > 0 && currentIndex > 0) {
-        // Swipe down - previous reel
         setCurrentIndex((prev) => prev - 1);
       } else if (deltaY < 0 && currentIndex < mockReels.length - 1) {
-        // Swipe up - next reel
         setCurrentIndex((prev) => prev + 1);
       }
     }
     setTouchStartY(null);
   };
 
-  const handleVideoClick = () => {
-    setIsPlaying((prev) => !prev);
-  };
-
-  const handleCloseComments = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      setShowComments(false);
-    }
-  };
+  const DesktopActions = () => (
+    <div className="flex flex-col gap-6">
+      <button onClick={() => setIsLiked(!isLiked)} className="flex flex-col items-center gap-1 transition-all hover:scale-110">
+        <Heart className={`h-7 w-7 transition-colors ${isLiked ? "fill-red-500 text-red-500" : "text-foreground"}`} />
+        <span className="text-xs font-semibold">{currentReel.likes}</span>
+      </button>
+      <button onClick={() => setShowComments(!showComments)} className="flex flex-col items-center gap-1 transition-all hover:scale-110">
+        <MessageCircle className="h-7 w-7" />
+        <span className="text-xs font-semibold">{currentReel.comments.length}</span>
+      </button>
+      <button className="flex flex-col items-center gap-1 transition-all hover:scale-110">
+        <SendIcon />
+      </button>
+      <button onClick={() => setIsSaved(!isSaved)} className="flex flex-col items-center gap-1 transition-all hover:scale-110">
+        <Bookmark className={`h-7 w-7 transition-colors ${isSaved ? "fill-black text-black" : "text-foreground"}`} />
+      </button>
+      <button className="flex flex-col items-center gap-1 transition-all hover:scale-110">
+        <MoreHorizontal className="h-5 w-5" />
+      </button>
+    </div>
+  );
 
   return (
     <div className="relative h-full w-full flex justify-center bg-background pb-14 md:pb-0">
-      {" "}
-      {/* Added pb-14 for mobile bottom nav; adjust value as needed */}
       <div className="flex flex-col md:flex-row items-center gap-4">
-        {/* Video Stack */}
         <div
-          className="relative w-full h-full md:w-[370px] md:h-[92vh] bg-card overflow-hidden shadow-2xl" // Removed mb-22; using parent pb instead
+          className="relative w-full h-full md:w-[370px] md:h-[92vh] bg-card overflow-hidden shadow-2xl"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
@@ -449,173 +562,35 @@ const ReelsWrapper = () => {
             style={{ transform: `translateY(-${currentIndex * 100}%)` }}
           >
             {mockReels.map((reel, index) => (
-              <div
+              <SingleReel
                 key={reel.id}
-                className="w-full h-full flex-shrink-0 relative"
-              >
-                <video
-                  ref={(el: HTMLVideoElement | null) => {
-                    videoRefs.current[index] = el;
-                  }}
-                  src={reel.videoUrl}
-                  className="w-full h-full object-cover cursor-pointer"
-                  loop
-                  muted={isMuted}
-                  onClick={handleVideoClick}
-                  playsInline
-                  autoPlay
-                />
-
-                {/* Top right mute button */}
-                <button
-                  onClick={() => setIsMuted(!isMuted)}
-                  className="absolute top-4 right-4 p-2 rounded-full bg-gray-500/60  transition-colors z-10"
-                >
-                  {isMuted ? (
-                    <VolumeX className="h-6 w-6 text-white" />
-                  ) : (
-                    <Volume2 className="h-6 w-6 text-white" />
-                  )}
-                </button>
-
-                {/* Overlay info - Adjusted bottom to account for bottom nav */}
-                <div className="absolute bottom-0 pb-12 left-0 right-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10 md:bottom-0">
-                  {" "}
-                  {/* bottom-14 for mobile; adjust as needed */}
-                  <div className="flex items-center  gap-3 mb-3 text-white">
-                    <Avatar
-                      src={reel.userAvatar}
-                      alt={reel.username}
-                      fallback={reel.username[0]}
-                      className="h-10 w-10 border-2 border-primary"
-                    />
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold text-sm">
-                        {reel.username}
-                        <p className="text-xs text-muted-foreground text-white">
-                          ♪ {reel.music}
-                        </p>
-                      </span>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-7 px-4 text-xs text-white"
-                      >
-                        Follow
-                      </Button>
-                    </div>
-                  </div>
-                  <p className="text-sm mb-2 text-white">{reel.description}</p>
-                </div>
-
-                {/* Mobile actions - Adjusted bottom to account for bottom nav */}
-                <div className="absolute bottom-20 right-4 md:hidden flex flex-col gap-6 z-20">
-                  {" "}
-                  {/* bottom-20 for mobile; adjust as needed */}
-                  <ReelActions
-                    likes={reel.likes}
-                    comments={reel.comments.length}
-                    isLiked={isLiked}
-                    isSaved={isSaved}
-                    onLike={() => setIsLiked(!isLiked)}
-                    onComment={() => setShowComments(!showComments)}
-                    onShare={() => {}}
-                    onSave={() => setIsSaved(!isSaved)}
-                    isMobile={true}
-                  />
-                </div>
-              </div>
+                reel={reel}
+                videoRef={(el) => {
+                  videoRefs.current[index] = el;
+                }}
+                isMuted={isMuted}
+                isLiked={isLiked}
+                isSaved={isSaved}
+                onMuteToggle={() => setIsMuted(!isMuted)}
+                onVideoClick={() => setIsPlaying((prev) => !prev)}
+                onLike={() => setIsLiked(!isLiked)}
+                onComment={() => setShowComments(!showComments)}
+                onSave={() => setIsSaved(!isSaved)}
+              />
             ))}
           </div>
         </div>
 
-        {/* Desktop actions */}
         <div className="hidden md:flex flex-col gap-6 justify-end h-[92vh]">
-          <ReelActions
-            likes={currentReel.likes}
-            comments={currentReel.comments.length}
-            isLiked={isLiked}
-            isSaved={isSaved}
-            onLike={() => setIsLiked(!isLiked)}
-            onComment={() => setShowComments(!showComments)}
-            onShare={() => {}}
-            onSave={() => setIsSaved(!isSaved)}
-          />
+          <DesktopActions />
         </div>
       </div>
-      {/* Comment popup */}
-      {showComments && (
-        <div
-          className="fixed bottom-0 left-0 right-0 h-[50vh] z-40 bg-white backdrop-blur-md p-4 flex flex-col rounded-t-2xl shadow-lg transform transition-transform duration-300 ease-out
-    md:absolute md:bottom-0 md:right-10 md:left-auto md:w-80 md:h-[50vh] md:rounded-lg md:rounded-tr-none" // Removed mb-14; now using bottom-0 with parent pb
-          style={{
-            transform: showComments ? "translateY(0)" : "translateY(100%)",
-          }}
-          onClick={handleCloseComments}
-        >
-          <div
-            className="flex flex-col flex-1 h-full"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Mobile handle bar */}
-            <div className="flex md:hidden w-full justify-center items-center">
-              <span className="w-14 h-1 rounded-full mb-5 bg-gray-300"></span>
-            </div>
 
-            {/* Header */}
-            <h3 className="font-semibold md:font-bold mb-3 text-center">
-              Comments
-            </h3>
-
-            {/* Comments List */}
-            <div className="flex-1 overflow-y-auto mb-2 pr-1">
-              {currentReel.comments.map((c) => (
-                <div key={c.id} className="flex flex-col gap-1 mb-3">
-                  <div className="flex items-start gap-3">
-                    <Avatar
-                      src={c.userAvatar}
-                      alt={c.username}
-                      fallback={c.username[0]}
-                      className="h-8 w-8 border border-gray-300"
-                    />
-                    <div className="flex flex-col flex-1">
-                      <span className="font-semibold flex justify-between text-sm">
-                        <span>{c.username}</span>
-                        <Heart className="h-3 w-3" />
-                      </span>
-                      <span className="text-sm">{c.text}</span>
-
-                      {/* Like & Reply buttons */}
-                      <div className="flex gap-4 mt-1 text-xs text-gray-500">
-                        <button className="flex font-semibold items-center gap-1">
-                          50 likes
-                        </button>
-                        <button className="font-semibold">Reply</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex items-center gap-2 bg-gray-100 px-2 py-1 rounded-full border border-gray-300">
-              {" "}
-              <Avatar
-                src="https://randomuser.me/api/portraits/men/32.jpg"
-                alt="You"
-                fallback="Y"
-                className="h-8 w-8"
-              />{" "}
-              <input
-                type="text"
-                placeholder="Add a comment..."
-                className="w-full pl-2 bg-gray-100 rounded-full text-sm focus:outline-none text-gray-900"
-              />{" "}
-              <Smile className="h-6 w-6 text-gray-500 cursor-pointer" />{" "}
-            </div>
-          </div>
-        </div>
-      )}
+      <CommentsSection
+        comments={currentReel.comments}
+        isVisible={showComments}
+        onClose={() => setShowComments(false)}
+      />
     </div>
   );
 };
