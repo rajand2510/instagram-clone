@@ -1,7 +1,5 @@
 // suggestedPeople.ts
-
 import { SuggestedPerson } from "../Types/type";
-
 
 export const suggestedPeople: SuggestedPerson[] = [
   {
@@ -11,6 +9,7 @@ export const suggestedPeople: SuggestedPerson[] = [
     profilePic:
       "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=200&h=200&fit=crop",
     isFollowing: false,
+    lastActive: "Active 5m ago",
   },
   {
     id: 2,
@@ -19,6 +18,7 @@ export const suggestedPeople: SuggestedPerson[] = [
     profilePic:
       "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=200&h=200&fit=crop",
     isFollowing: false,
+    lastActive: "Active 30m ago",
   },
   {
     id: 3,
@@ -27,6 +27,7 @@ export const suggestedPeople: SuggestedPerson[] = [
     profilePic:
       "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200&h=200&fit=crop",
     isFollowing: true,
+    lastActive: "Online now",
   },
   {
     id: 4,
@@ -35,6 +36,7 @@ export const suggestedPeople: SuggestedPerson[] = [
     profilePic:
       "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=200&h=200&fit=crop",
     isFollowing: false,
+    lastActive: "Active yesterday",
   },
   {
     id: 5,
@@ -43,5 +45,6 @@ export const suggestedPeople: SuggestedPerson[] = [
     profilePic:
       "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&h=200&fit=crop",
     isFollowing: false,
+    lastActive: "Active 2h ago",
   },
 ];

@@ -27,6 +27,7 @@ export interface SuggestedPerson {
   fullName: string;
   profilePic: string;
   isFollowing: boolean;
+    lastActive?: string; 
 }
 
 // Types/type.ts

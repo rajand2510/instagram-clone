@@ -96,7 +96,7 @@ const ExploreGrid: React.FC = () => {
       <div className="w-full md:max-w-[600px] lg:max-w-[978px] lg:w-[978px] mx-auto relative  md:px-6 lg:px-0">
         {/* mobile and tablet search bar when no overlay */}
         {!showOverlay && (
-          <div className="block lg:hidden bg-[#f4f4f4] sticky top-0 left-0 right-0 z-30 -mx-4 md:-mx-6 px-4 py-2">
+       <div className="block lg:hidden bg-[#f4f4f4] sticky top-0 left-0 right-0 z-30 md:-mx-6 px-4 py-2">
             <div className="flex items-center space-x-2 px-4">
               <div className="relative flex-1">
                 <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 w-4 h-4" />

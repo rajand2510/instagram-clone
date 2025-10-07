@@ -27,9 +27,7 @@ import Notification from "./Notification";
 import Portal from "../Hooks/Portal";
 import { useLocation, useNavigate } from "react-router";
 import Search from "./Search";
-import useNavigationStore ,{TabName} from "../Store/useNavigationStore";
-
-
+import useNavigationStore, { TabName } from "../Store/useNavigationStore";
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
@@ -88,6 +86,14 @@ const Sidebar: React.FC = () => {
       return;
     }
 
+    // Messages
+    if (name === "Messages") {
+      resetOverlays();
+      navigate("/messages");
+      setActive(name);
+      return;
+    }
+
     // Close overlays when navigating to other tabs
     resetOverlays();
 
@@ -95,7 +101,6 @@ const Sidebar: React.FC = () => {
     if (name === "Home") navigate("/");
     if (name === "Explore") navigate("/explore");
     if (name === "Reels") navigate("/reels");
-    if (name === "Messages") navigate("/messages");
     if (name === "Profile") navigate("/profile");
 
     setActive(name);
@@ -124,17 +129,22 @@ const Sidebar: React.FC = () => {
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className="hidden md:block fixed bg-white md:w-[73px] lg:w-[245px] md:min-w-[73px] lg:min-w-[245px] md:max-w-[73px] lg:max-w-[245px]">
+    <div
+  className={`hidden md:block fixed bg-white transition-all duration-300
+    ${active === "Messages" ? "w-[73px] min-w-[73px] max-w-[73px]" : "md:w-[73px] lg:w-[245px] md:min-w-[73px] lg:min-w-[245px] md:max-w-[73px] lg:max-w-[245px]"}
+  `}
+>
+
         <div
           className={`h-screen overflow-y-auto sticky top-0 border-r border-gray-200 transition-all duration-300 
         ${
-          showNotifications || showSearch
+          showNotifications || showSearch || active === "Messages"
             ? "w-[73px] min-w-[73px] max-w-[73px]"
             : "w-full "
         }`}
         >
           {/* Logo */}
-          {showNotifications || showSearch ? (
+          {showNotifications || showSearch || active === "Messages" ? (
             <div className="pt-[36px] pb-[7px] pl-6">
               <InstagramIcon />
             </div>
@@ -158,10 +168,14 @@ const Sidebar: React.FC = () => {
                 active === "Home" ? "font-bold" : ""
               } rounded-lg px-3 hover:bg-gray-100 cursor-pointer`}
             >
-              {active === "Home" ? <HomeFillIcon /> : <Home />}
+              <div className="flex-shrink-0">
+                {active === "Home" ? <HomeFillIcon /> : <Home />}
+              </div>
               <span
                 className={`${
-                  showNotifications || showSearch ? "hidden" : "md:hidden lg:block"
+                  showNotifications || showSearch || active === "Messages"
+                    ? "hidden"
+                    : "md:hidden lg:block"
                 }`}
               >
                 Home
@@ -172,10 +186,14 @@ const Sidebar: React.FC = () => {
               onClick={() => handleClick("Search")}
               className="flex flex-row gap-4 py-3 rounded-lg px-3 hover:bg-gray-100 cursor-pointer"
             >
-              {active === "Search" ? <SearchIconFill /> : <SearchIcon />}
+              <div className="flex-shrink-0">
+                {active === "Search" ? <SearchIconFill /> : <SearchIcon />}
+              </div>
               <span
                 className={`${
-                  showNotifications || showSearch ? "hidden" : "md:hidden lg:block"
+                  showNotifications || showSearch || active === "Messages"
+                    ? "hidden"
+                    : "md:hidden lg:block"
                 }`}
               >
                 Search
@@ -188,10 +206,14 @@ const Sidebar: React.FC = () => {
                 active === "Explore" ? "font-bold" : ""
               } rounded-lg px-3 hover:bg-gray-100 cursor-pointer`}
             >
-              {active === "Explore" ? <ExploreIconFill /> : <ExploreIcon />}
+              <div className="flex-shrink-0">
+                {active === "Explore" ? <ExploreIconFill /> : <ExploreIcon />}
+              </div>
               <span
                 className={`${
-                  showNotifications || showSearch ? "hidden" : "md:hidden lg:block"
+                  showNotifications || showSearch || active === "Messages"
+                    ? "hidden"
+                    : "md:hidden lg:block"
                 }`}
               >
                 Explore
@@ -204,10 +226,14 @@ const Sidebar: React.FC = () => {
                 active === "Reels" ? "font-bold" : ""
               } rounded-lg px-3 hover:bg-gray-100 cursor-pointer`}
             >
-              {active === "Reels" ? <ReelIconFill /> : <ReelIcon />}
+              <div className="flex-shrink-0">
+                {active === "Reels" ? <ReelIconFill /> : <ReelIcon />}
+              </div>
               <span
                 className={`${
-                  showNotifications || showSearch ? "hidden" : "md:hidden lg:block"
+                  showNotifications || showSearch || active === "Messages"
+                    ? "hidden"
+                    : "md:hidden lg:block"
                 }`}
               >
                 Reels
@@ -220,10 +246,14 @@ const Sidebar: React.FC = () => {
                 active === "Messages" ? "font-bold" : ""
               } rounded-lg px-3 hover:bg-gray-100 cursor-pointer`}
             >
-              {active === "Messages" ? <MessageIconFill /> : <MessageIcon />}
+              <div className="flex-shrink-0">
+                {active === "Messages" ? <MessageIconFill /> : <MessageIcon />}
+              </div>
               <span
                 className={`${
-                  showNotifications || showSearch ? "hidden" : "md:hidden lg:block"
+                  showNotifications || showSearch || active === "Messages"
+                    ? "hidden"
+                    : "md:hidden lg:block"
                 }`}
               >
                 Messages
@@ -236,14 +266,18 @@ const Sidebar: React.FC = () => {
                 active === "Notifications" ? "font-bold" : ""
               } rounded-lg px-3 hover:bg-gray-100 cursor-pointer`}
             >
-              {active === "Notifications" ? (
-                <NotificationsIconFill />
-              ) : (
-                <NotificationsIcon />
-              )}
+              <div className="flex-shrink-0">
+                {active === "Notifications" ? (
+                  <NotificationsIconFill />
+                ) : (
+                  <NotificationsIcon />
+                )}
+              </div>
               <span
                 className={`${
-                  showNotifications || showSearch ? "hidden" : "md:hidden lg:block"
+                  showNotifications || showSearch || active === "Messages"
+                    ? "hidden"
+                    : "md:hidden lg:block"
                 }`}
               >
                 Notifications
@@ -255,10 +289,14 @@ const Sidebar: React.FC = () => {
               onClick={() => handleClick("Create")}
               className="relative flex flex-row gap-4 py-3 rounded-lg px-3 hover:bg-gray-100 cursor-pointer"
             >
-              <AddIcon />
+              <div className="flex-shrink-0">
+                <AddIcon />
+              </div>
               <span
                 className={`${
-                  showNotifications || showSearch ? "hidden" : "md:hidden lg:block"
+                  showNotifications || showSearch || active === "Messages"
+                    ? "hidden"
+                    : "md:hidden lg:block"
                 }`}
               >
                 Create
@@ -271,7 +309,7 @@ const Sidebar: React.FC = () => {
                 active === "Profile" ? "font-bold" : ""
               } rounded-lg px-3 hover:bg-gray-100 cursor-pointer`}
             >
-              <span>
+              <div className="flex-shrink-0">
                 <img
                   className={`w-[27px] border-2 rounded-full ${
                     active === "Profile" ? "border-black" : "border-gray-300"
@@ -279,10 +317,12 @@ const Sidebar: React.FC = () => {
                   src={Profile}
                   alt="profile"
                 />
-              </span>
+              </div>
               <span
                 className={`${
-                  showNotifications || showSearch ? "hidden" : "md:hidden lg:block"
+                  showNotifications || showSearch || active === "Messages"
+                    ? "hidden"
+                    : "md:hidden lg:block"
                 }`}
               >
                 Profile
@@ -298,20 +338,28 @@ const Sidebar: React.FC = () => {
                 showMorePopup ? "font-bold" : ""
               } rounded-lg px-3 hover:bg-gray-100 cursor-pointer`}
             >
-              {showMorePopup ? <MoreIconFill /> : <MoreIcon />}
+              <div className="flex-shrink-0">
+                {showMorePopup ? <MoreIconFill /> : <MoreIcon />}
+              </div>
               <span
                 className={`${
-                  showNotifications || showSearch ? "hidden" : "md:hidden lg:block"
+                  showNotifications || showSearch || active === "Messages"
+                    ? "hidden"
+                    : "md:hidden lg:block"
                 }`}
               >
                 More
               </span>
             </div>
             <div className="flex flex-row gap-4 py-3 rounded-lg px-3 hover:bg-gray-100 cursor-pointer">
-              <MetaAi />{" "}
+              <div className="flex-shrink-0">
+                <MetaAi />
+              </div>
               <span
                 className={`${
-                  showNotifications || showSearch ? "hidden" : "md:hidden lg:block"
+                  showNotifications || showSearch || active === "Messages"
+                    ? "hidden"
+                    : "md:hidden lg:block"
                 }`}
               >
                 Also from Meta

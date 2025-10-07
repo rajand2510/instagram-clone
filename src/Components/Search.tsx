@@ -38,7 +38,7 @@ const Search = () => {
     <div className="hidden md:block items-center justify-between">
       <h1 className="text-2xl font-semibold px-6 py-[18px]">Search</h1>
 
-      {/* Input */}
+  
       <div
         className={`w-full relative px-4 mt-6 pb-6 ${
           showSuggestions ? "border-b border-gray-300" : ""
@@ -67,7 +67,7 @@ const Search = () => {
       </div>
 
       <div className="max-h-[calc(100vh-133px)] overflow-y-auto">
-        {/* Suggested People */}
+       
         {showSuggestions && (
           <>
             <div className="flex flex-row mt-5 justify-between items-center px-6">
@@ -108,7 +108,7 @@ const Search = () => {
           </>
         )}
 
-        {/* Dummy search results */}
+       
         {showDummyResults && (
           <div className="py-2">
             {dummyResults.map((res) => (

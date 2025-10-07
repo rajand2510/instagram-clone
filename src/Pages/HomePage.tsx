@@ -21,6 +21,7 @@ import myStoryImg from "../assets/images/profile.png";
 import { Post } from "../Types/type";
 import { posts } from "../Data/postsData";
 import { suggestedPeople } from "../Data/suggestedPeople";
+import { useNavigate } from "react-router";
 
 const defaultStories = [
   {
@@ -79,6 +80,8 @@ const HomePage = () => {
   const [expandedPosts, setExpandedPosts] = useState<Record<number, boolean>>(
     {}
   );
+
+  const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
 
@@ -201,6 +204,7 @@ const HomePage = () => {
                   className={`snap-start flex-none w-24 sm:w-24 focus:outline-none m-0 p-0 ${
                     s.isUser ? "block lg:hidden" : ""
                   }`}
+                  onClick={() => navigate('/stories/mib_india/1')}
                   aria-label={`Open ${s.name}'s story`}
                 >
                   <div className="flex flex-col items-center">
